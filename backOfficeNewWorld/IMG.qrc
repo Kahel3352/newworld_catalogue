@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/new/ImgRessouces">
+        <file>iconebonhomme.png</file>
+        <file>close_red.png</file>
+    </qresource>
+</RCC>
