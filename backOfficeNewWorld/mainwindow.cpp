@@ -197,9 +197,9 @@ void MainWindow::chargetableWidgetValidationVariete(){
             ui->tableWidgetValidationVariete->setItem(ui->tableWidgetValidationVariete->rowCount()-1,1,new QTableWidgetItem(maRequeteVariete.value("produitNom").toString()));
             ui->tableWidgetValidationVariete->setItem(ui->tableWidgetValidationVariete->rowCount()-1,2,new QTableWidgetItem(maRequeteVariete.value("varieteNom").toString()));
             ui->tableWidgetValidationVariete->setItem(ui->tableWidgetValidationVariete->rowCount()-1,3,new QTableWidgetItem(maRequeteVariete.value("varieteDescr").toString()));
-            ui->tableWidgetValidationVariete->hideColumn(3);
+            //ui->tableWidgetValidationVariete->hideColumn(3);
             ui->tableWidgetValidationVariete->setItem(ui->tableWidgetValidationVariete->rowCount()-1,4,new QTableWidgetItem(maRequeteVariete.value("varieteImg").toString()));
-            ui->tableWidgetValidationVariete->hideColumn(4);
+            //ui->tableWidgetValidationVariete->hideColumn(4);
 
             QCheckBox * checkVariete=new QCheckBox("Validé",ui->tableWidgetValidationVariete);
             checkVariete->setProperty("varieteNum",maRequeteVariete.value("varieteNum").toString());
@@ -225,7 +225,8 @@ void MainWindow::on_tableWidgetValidationVariete_clicked(const QModelIndex &inde
     ui->labelVProduitVariete->setText(ui->tableWidgetValidationVariete->item(index.row(),1)->text());
     ui->labelVVariete->setText(ui->tableWidgetValidationVariete->item(index.row(),2)->text());
     ui->textEditVDescrVariete->setText(ui->tableWidgetValidationVariete->item(index.row(),3)->text());
-    QString fileName="/home/mlebeau/public_html/NW 2.0/backOfficeNewWorld/ImgRessources/"+ui->tableWidgetValidationProduit->item(index.row(),4)->text();
+
+    QString fileName="/home/mlebeau/public_html/NW 2.0/backOfficeNewWorld/ImgRessources/"+ui->tableWidgetValidationVariete->item(index.row(),4)->text();
     ui->labelVImgVariete->setPixmap(QPixmap(fileName).scaled(200,200));
     ui->checkBoxVVariete->setCheckState(((QCheckBox*)(ui->tableWidgetValidationVariete->cellWidget(index.row(),5)))->checkState());
 }

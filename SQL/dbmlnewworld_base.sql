@@ -36,10 +36,12 @@ CREATE TABLE `Produire`(`rayonNum` INTEGER NOT NULL,`userId` INTEGER NOT NULL, f
 
 CREATE TABLE `Commande`(`cmdNum` INTEGER,`cmdPrix` FLOAT,`cmdDate` DATE,`userId` INTEGER NOT NULL, foreign key (`userId`) references Utilisateur(`userId`),primary key(`cmdNum`));
 
-CREATE TABLE `LotProd`(`lotprodNum` INTEGER,`lotprodNom` VARCHAR(25),`lotprodPrixU` FLOAT,`lotprodQte` FLOAT,`lotprodUniteId` INTEGER,`lotprodDescr` VARCHAR(200),`lotprodDateRecolte` INTEGER,`lotprodDLC` INTEGER,`lotprodParcelleId` INTEGER,`parcelleNum` INTEGER NOT NULL,`varieteNum` INTEGER NOT NULL, foreign key (`parcelleNum`) references Parcelle(`parcelleNum`), foreign key (`varieteNum`) references Variete(`varieteNum`),primary key(`lotprodNum`));
+CREATE TABLE `LotProd`(`lotprodNum` INTEGER,`lotprodPrixU` FLOAT,`lotprodQte` FLOAT,`lotprodUniteId` INTEGER,`lotprodDescr` VARCHAR(200),`lotprodDateRecolte` INTEGER,`lotprodDLC` INTEGER,`lotprodParcelleId` INTEGER,`parcelleNum` INTEGER NOT NULL,`varieteNum` INTEGER NOT NULL, foreign key (`parcelleNum`) references Parcelle(`parcelleNum`), foreign key (`varieteNum`) references Variete(`varieteNum`),primary key(`lotprodNum`));
 
 CREATE TABLE `Distribution`(`distribId` INTEGER NOT NULL,`lotprodNum` INTEGER NOT NULL, foreign key (`distribId`) references Distributeur(`distribId`), foreign key (`lotprodNum`) references LotProd(`lotprodNum`),primary key(`distribId`,`lotprodNum`));
 
 CREATE TABLE `UnitMesLot`(`unitemesNum` INTEGER NOT NULL,`lotprodNum` INTEGER NOT NULL, foreign key (`unitemesNum`) references UniteMesure(`unitemesNum`), foreign key (`lotprodNum`) references LotProd(`lotprodNum`),primary key(`unitemesNum`,`lotprodNum`));
 
 CREATE TABLE `LigneDeCommande`(`LDCQte` FLOAT,`lotprodNum` INTEGER NOT NULL,`cmdNum` INTEGER NOT NULL,`distribId` INTEGER NOT NULL, foreign key (`lotprodNum`) references LotProd(`lotprodNum`), foreign key (`cmdNum`) references Commande(`cmdNum`), foreign key (`distribId`) references Distributeur(`distribId`),primary key(`lotprodNum`,`cmdNum`));
+
+source dbmlnewworld_data.sql;

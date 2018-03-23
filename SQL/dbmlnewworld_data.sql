@@ -58,10 +58,10 @@ INSERT INTO `Role` (`roleId`, `roleLib`) VALUES
 
 INSERT INTO `Utilisateur` (`userId`, `userPseudo`, `userMdp`, `userMail`, `userImg`, `userDescr`, `userNom`, `userPrenom`, `userAdress`, `userVille`, `userCP`, `userTel`, `userValid`, `roleId`) VALUES
 (0, 'Nanie', 'melanie33', 'melanie33130@live.fr', '0', 'Je suis Nanie', 'Lebeau', 'Mélanie', '109 Boulevard Georges Pompidou', 'Gap', '05000', '0650993930',1,1),
-(1, 'Wanheda', 'skaikruWanheda', 'wanheda@live.fr', '0', 'Je viens de la série the ', 'Griffin', 'Clarke', '48 Rue des Hedas', 'Polis', '48100', '0626483698',1,1),
-(2, 'Heda', 'heda', 'heda@live.fr', '0', 'Je viens de la série the ', 'Woods', 'Lexa', '48 Rue des Hedas', 'Polis', '48100', '0626469630',0,1),
-(3, 'SpaceWalker', 'spacewalker', 'spacewalker@live.fr', '0', 'Je viens de la série the ', 'Collins', 'Finn', '22 Boulevard de la Folie de TonDc', 'Ark', '10048', '0626464564',0,1),
-(4, 'Reaper', 'reaper', 'faucheurreaper@live.fr', '0', 'Je viens de la série the ', 'Reaper', 'Faucheur', '2 Impasse du Cannibalisme', 'Mount Weather', '02100', '0626464455',0,1);
+(1, 'Wanheda', 'skaikruWanheda', 'wanheda@live.fr', '0', 'Je viens de la série the 100', 'Griffin', 'Clarke', '48 Rue des Hedas', 'Polis', '48100', '0626483698',1,1),
+(2, 'Heda', 'heda', 'heda@live.fr', '0', 'Je viens de la série the 100', 'Woods', 'Lexa', '48 Rue des Hedas', 'Polis', '48100', '0626469630',0,1),
+(3, 'SpaceWalker', 'spacewalker', 'spacewalker@live.fr', '0', 'Je viens de la série the 100', 'Collins', 'Finn', '22 Boulevard de la Folie de TonDc', 'Ark', '10048', '0626464564',0,1),
+(4, 'Reaper', 'reaper', 'faucheurreaper@live.fr', '0', 'Je viens de la série the 100', 'Reaper', 'Faucheur', '2 Impasse du Cannibalisme', 'Mount Weather', '02100', '0626464455',0,1);
 
 
 
@@ -70,22 +70,12 @@ INSERT INTO `Utilisateur` (`userId`, `userPseudo`, `userMdp`, `userMail`, `userI
 --
 
 INSERT INTO `Variete` (`varieteNum`, `varieteNom`, `varieteImg`, `varieteDescr`, `varieteValid`, `produitNum`) VALUES
-(0, 'Coeur de Boeuf', 'Variété fragile de tomate, elle est réputée pour son goût, sa chair abondante et la rareté de ses pépins', 'tomate_coeurdeboeuf.png', 0, 0),
-(1, 'Bleue Osu', 'Variété rare de tomate bleue, au gout fade qui necessite un bon assaisonnement', 'tomate_bleueosu.png', 0, 0),
-(2, 'Yellow Stuffer', 'Variété de tomate jaune qui ressemble fortement à un poivron, idéale à farcir', 'tomate_yellowstuffer.png', 0, 0),
-(3, 'Comice', 'Variété fragile de poire, à la chaire blanche, juteuse et fondante, extrêmement parfumée et sucrée.', 'poire_comice.png', 0, 1),
-(4, 'Blanche des Vosges', 'Variété ancienne de carotte, elle est gouteuse si elle est récoltée jeune, utilisé  en fourragère pour des récoltes de racines plus âgées.', 'carotte_blanchedesvosges.png', 0, 2);
+(0, 'Coeur de Boeuf','tomate_coeurdeboeuf.png', 'Variété fragile de tomate, elle est réputée pour son goût, sa chair abondante et la rareté de ses pépins',  0, 0),
+(1, 'Bleue Osu','tomate_bleueosu.png', 'Variété rare de tomate bleue, au gout fade qui necessite un bon assaisonnement',  0, 0),
+(2, 'Yellow Stuffer','tomate_yellowstuffer.png', 'Variété de tomate jaune qui ressemble fortement à un poivron, idéale à farcir',  0, 0),
+(3, 'Comice','poire_comice.png', 'Variété fragile de poire, à la chaire blanche, juteuse et fondante, extrêmement parfumée et sucrée.',  0, 1),
+(4, 'Blanche des Vosges', 'carotte_blanchedesvosges.png', 'Variété ancienne de carotte, elle est gouteuse si elle est récoltée jeune, utilisé  en fourragère pour des récoltes de racines plus âgées.', 0, 2);
 
---
--- Contenu de la table `Commande`
---
-INSERT INTO Commande VALUES
-(0, 22.60, '2017-12-22', 3),
-(1, 8.40, '2017-12-22', 3),
-(2, 16.30, '2017-12-24', 4),
-(3, 15.90, '2018-01-25', 4),
-(4, 5.90, '2018-01-28', 3),
-(5, 12.50, '2018-03-19', 3);
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
