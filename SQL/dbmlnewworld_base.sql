@@ -42,6 +42,6 @@ CREATE TABLE `Distribution`(`distribId` INTEGER NOT NULL,`lotprodNum` INTEGER NO
 
 CREATE TABLE `UnitMesLot`(`unitemesNum` INTEGER NOT NULL,`lotprodNum` INTEGER NOT NULL, foreign key (`unitemesNum`) references UniteMesure(`unitemesNum`), foreign key (`lotprodNum`) references LotProd(`lotprodNum`),primary key(`unitemesNum`,`lotprodNum`));
 
-CREATE TABLE `LigneDeCommade`(`LDCQte` FLOAT,`lotprodNum` INTEGER NOT NULL,`cmdNum` INTEGER NOT NULL,`distribId` INTEGER NOT NULL, foreign key (`lotprodNum`) references LotProd(`lotprodNum`), foreign key (`cmdNum`) references Commande(`cmdNum`), foreign key (`distribId`) references Distributeur(`distribId`),primary key(`lotprodNum`,`cmdNum`));
+CREATE TABLE `LigneDeCommande`(`LDCQte` FLOAT,`lotprodNum` INTEGER NOT NULL,`cmdNum` INTEGER NOT NULL,`distribId` INTEGER NOT NULL, foreign key (`lotprodNum`) references LotProd(`lotprodNum`), foreign key (`cmdNum`) references Commande(`cmdNum`), foreign key (`distribId`) references Distributeur(`distribId`),primary key(`lotprodNum`,`cmdNum`));
 
 source dbmlnewworld_data.sql;
