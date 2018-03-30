@@ -1,7 +1,0 @@
-<RCC>
-    <qresource prefix="/new/ImgRessources">
-        <file>ImgRessources/iconebonhomme.png</file>
-        <file>ImgRessources/close_red.png</file>
-        <file>ImgRessources/checked.png</file>
-    </qresource>
-</RCC>
