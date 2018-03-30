@@ -76,6 +76,14 @@ INSERT INTO `Variete` (`varieteNum`, `varieteNom`, `varieteImg`, `varieteDescr`,
 (3, 'Comice','poire_comice.png', 'Variété fragile de poire, à la chaire blanche, juteuse et fondante, extrêmement parfumée et sucrée.',  0, 1),
 (4, 'Blanche des Vosges', 'carotte_blanchedesvosges.png', 'Variété ancienne de carotte, elle est gouteuse si elle est récoltée jeune, utilisé  en fourragère pour des récoltes de racines plus âgées.', 0, 2);
 
+INSERT INTO Commande VALUES
+(0, 22.6, "2017-12-22", 3),
+(1, 8.4, "2017-12-22", 3),
+(2, 7.2, "2017-12-22", 2),
+(3, 16.3, "2017-12-24", 4),
+(4, 15.9, "2018-01-25", 4),
+(5, 5.9, "2017-01-28", 3),
+(6, 12.5, "2018-03-19", 3);
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
