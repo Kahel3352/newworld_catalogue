@@ -1,45 +1,45 @@
-DROP TABLE IF EXISTS Lot, Article, Parcelle, Label, Avis, Consommateur, RelaiPossible, Commande, Producteur, Ouverture, Distributeur, Relai, Utilisateur, Adresse, Securite, Variete, Produit, Unite, Ville, Jour, Question, Rayon;
+DROP TABLE IF EXISTS Avis, Consommateur, Commande, Lot, VerificationParcelle, Parcelle, RelaiPossible, Producteur, Ouverture, Distributeur, Relai, Utilisateur, Adresse, Variete, Produit, Unite, Ville, Jour, Question, Label, Rayon;
 
-CREATE TABLE `Rayon`(`idRayon` INTEGER,`libelle` VARCHAR(25),primary key(`idRayon`));
+CREATE TABLE `Rayon`(`rayonId` INTEGER,`rayonLibelle` VARCHAR(25),primary key(`rayonId`));
 
-CREATE TABLE `Question`(`idPhrase` INTEGER,`phrase` VARCHAR(100),primary key(`idPhrase`));
+CREATE TABLE `Question`(`phraseId` INTEGER,`phraseIntitule` VARCHAR(100),primary key(`phraseId`));
 
-CREATE TABLE `Jour`(`idJour` INTEGER,`nom` VARCHAR(8),primary key(`idJour`));
+CREATE TABLE `Label`(`labelId` INTEGER,`labelNom` VARCHAR(25),`labelLogo` VARCHAR(25),primary key(`labelId`));
 
-CREATE TABLE `Ville`(`idVille` INTEGER,`nom` VARCHAR(25),`codePostal` VARCHAR(5),primary key(`idVille`));
+CREATE TABLE `Jour`(`jourId` INTEGER,`jourNom` VARCHAR(8),primary key(`jourId`));
 
-CREATE TABLE `Unite`(`idUnite` INTEGER,`libelle` VARCHAR(25),primary key(`idUnite`));
+CREATE TABLE `Ville`(`villeId` INTEGER,`villeNom` VARCHAR(25),`villeCP` VARCHAR(5),primary key(`villeId`));
 
-CREATE TABLE `Produit`(`idProduit` INTEGER,`libelle` VARCHAR(25),`idUnite` INTEGER NOT NULL,`idRayon` INTEGER NOT NULL, foreign key (`idUnite`) references Unite(`idUnite`), foreign key (`idRayon`) references Rayon(`idRayon`),primary key(`idProduit`));
+CREATE TABLE `Unite`(`uniteId` INTEGER,`uniteLibelle` VARCHAR(25),primary key(`uniteId`));
 
-CREATE TABLE `Variete`(`idVariete` INTEGER,`nom` VARCHAR(25),`description` VARCHAR(25),`image` VARCHAR(25),`idProduit` INTEGER NOT NULL, foreign key (`idProduit`) references Produit(`idProduit`),primary key(`idVariete`));
+CREATE TABLE `Produit`(`produitId` INTEGER,`produitLibelle` VARCHAR(25),`produitValid` BOOL,`uniteId` INTEGER NOT NULL,`rayonId` INTEGER NOT NULL, foreign key (`uniteId`) references Unite(`uniteId`), foreign key (`rayonId`) references Rayon(`rayonId`),primary key(`produitId`));
 
-CREATE TABLE `Adresse`(`idAdresse` INTEGER,`rue` VARCHAR(25),`idVille` INTEGER NOT NULL, foreign key (`idVille`) references Ville(`idVille`),primary key(`idAdresse`));
+CREATE TABLE `Variete`(`varieteId` INTEGER,`varieteNom` VARCHAR(25),`varieteDescr` VARCHAR(25),`varieteImg` VARCHAR(25),`varieteValid` BOOL,`produitId` INTEGER NOT NULL, foreign key (`produitId`) references Produit(`produitId`),primary key(`varieteId`));
 
-CREATE TABLE `Utilisateur`(`idUtilisateur` INTEGER,`nom` VARCHAR(25),`prenom` VARCHAR(25),`mail` VARCHAR(25),`etat` ENUM('valide', 'en cours'),`dteInscription` DATETIME,`facebook` VARCHAR(25),`google` VARCHAR(25),`telephone` VARCHAR(25),`mdp` VARCHAR(32),`reponseSecurite` VARCHAR(150),`nbEchecConnexion` INTEGER,`idAdresse` INTEGER NOT NULL,`idPhrase` INTEGER NOT NULL, foreign key (`idAdresse`) references Adresse(`idAdresse`), foreign key (`idPhrase`) references Question(`idPhrase`),primary key(`idUtilisateur`));
+CREATE TABLE `Adresse`(`adresseId` INTEGER,`adresseRue` VARCHAR(25),`villeId` INTEGER NOT NULL, foreign key (`villeId`) references Ville(`villeId`),primary key(`adresseId`));
 
-CREATE TABLE `Relai`(`idRelai` INTEGER,`idAdresse` INTEGER NOT NULL, foreign key (`idAdresse`) references Adresse(`idAdresse`),primary key(`idRelai`));
+CREATE TABLE `Utilisateur`(`userId` INTEGER,`userNom` VARCHAR(25),`userPrenom` VARCHAR(25),`userMail` VARCHAR(25),`userEtat` ENUM('valide', 'en cours'),`userDateInscription` DATETIME,`userFacebook` VARCHAR(25),`userGoogle` VARCHAR(25),`userTelephone` VARCHAR(25),`userMdp` VARCHAR(32),`userReponseSecurite` VARCHAR(150),`userNbEchecConnexion` INTEGER,`adresseId` INTEGER NOT NULL,`phraseId` INTEGER NOT NULL, foreign key (`adresseId`) references Adresse(`adresseId`), foreign key (`phraseId`) references Question(`phraseId`),primary key(`userId`));
 
-CREATE TABLE `Distributeur`(`idRelai` INTEGER NOT NULL,`idUtilisateur` INTEGER NOT NULL, foreign key (`idRelai`) references Relai(`idRelai`), foreign key (`idUtilisateur`) references Utilisateur(`idUtilisateur`),primary key(`idRelai`,`idUtilisateur`));
+CREATE TABLE `Relai`(`relaiId` INTEGER,`adresseId` INTEGER NOT NULL, foreign key (`adresseId`) references Adresse(`adresseId`),primary key(`relaiId`));
 
-CREATE TABLE `Ouverture`(`heureOuvertureMatin` TIME,`heureFermetureMatin` TIME,`heureOuvertureApresMidi` TIME,`heureFermetureApresMidi` TIME,`idRelai` INTEGER NOT NULL,`idJour` INTEGER NOT NULL, foreign key (`idRelai`) references Relai(`idRelai`), foreign key (`idJour`) references Jour(`idJour`),primary key(`idRelai`,`idJour`));
+CREATE TABLE `Distributeur`(`relaiId` INTEGER NOT NULL,`userId` INTEGER NOT NULL, foreign key (`relaiId`) references Relai(`relaiId`), foreign key (`userId`) references Utilisateur(`userId`),primary key(`relaiId`,`userId`));
 
-CREATE TABLE `Producteur`(`idProducteur` INTEGER,`description` VARCHAR(250),`image` VARCHAR(25),`idUtilisateur` INTEGER NOT NULL, foreign key (`idUtilisateur`) references Utilisateur(`idUtilisateur`),primary key(`idProducteur`));
+CREATE TABLE `Ouverture`(`heureOuvertureMatin` TIME,`heureFermetureMatin` TIME,`heureOuvertureApresMidi` TIME,`heureFermetureApresMidi` TIME,`relaiId` INTEGER NOT NULL,`jourId` INTEGER NOT NULL, foreign key (`relaiId`) references Relai(`relaiId`), foreign key (`jourId`) references Jour(`jourId`),primary key(`relaiId`,`jourId`));
 
-CREATE TABLE `Commande`(`idCommande` INTEGER,`date` DATETIME,`qte` FLOAT,`etat` ENUM('en cours', 'valide'),`idRelai` INTEGER NOT NULL, foreign key (`idRelai`) references Relai(`idRelai`),primary key(`idCommande`));
+CREATE TABLE `Producteur`(`producteurId` INTEGER,`producteurDescr` VARCHAR(250),`producteurImg` VARCHAR(25),`producteurValid` BOOL,`userId` INTEGER NOT NULL, foreign key (`userId`) references Utilisateur(`userId`),primary key(`producteurId`));
 
-CREATE TABLE `RelaiPossible`(`idRelai` INTEGER NOT NULL,`idProducteur` INTEGER NOT NULL, foreign key (`idRelai`) references Relai(`idRelai`), foreign key (`idProducteur`) references Producteur(`idProducteur`),primary key(`idRelai`,`idProducteur`));
+CREATE TABLE `RelaisPossible`(`relaiId` INTEGER NOT NULL,`producteurId` INTEGER NOT NULL, foreign key (`relaiId`) references Relai(`relaiId`), foreign key (`producteurId`) references Producteur(`producteurId`),primary key(`relaiId`,`producteurId`));
 
-CREATE TABLE `Consommateur`(`idCommande` INTEGER NOT NULL,`idUtilisateur` INTEGER NOT NULL, foreign key (`idCommande`) references Commande(`idCommande`), foreign key (`idUtilisateur`) references Utilisateur(`idUtilisateur`),primary key(`idCommande`,`idUtilisateur`));
+CREATE TABLE `Parcelle`(`parcelleId` INTEGER,`parcelleLongitude` VARCHAR(24),`parcelleLatitude` VARCHAR(24),`producteurId` INTEGER NOT NULL, foreign key (`producteurId`) references Producteur(`producteurId`),primary key(`parcelleId`));
 
-CREATE TABLE `Avis`(`idAvis` INTEGER,`commentaire` VARCHAR(250),`note` INTEGER,`idProducteur` INTEGER NOT NULL,`idCommande` INTEGER NOT NULL,`idUtilisateur` INTEGER NOT NULL, foreign key (`idProducteur`) references Producteur(`idProducteur`), foreign key (`idCommande`,`idUtilisateur`) references Consommateur(`idCommande`,`idUtilisateur`),primary key(`idAvis`));
+CREATE TABLE `VerificationParcelle`(`verifDate` INTEGER,`labelId` INTEGER NOT NULL,`parcelleId` INTEGER NOT NULL, foreign key (`labelId`) references Label(`labelId`), foreign key (`parcelleId`) references Parcelle(`parcelleId`),primary key(`labelId`,`parcelleId`));
 
-CREATE TABLE `Label`(`idLabel` INTEGER,`nom` VARCHAR(25),`logo` VARCHAR(25),`derniereVerif` DATE,`idProducteur` INTEGER NOT NULL, foreign key (`idProducteur`) references Producteur(`idProducteur`),primary key(`idLabel`));
+CREATE TABLE `Lot`(`lotId` INTEGER,`lotQte` FLOAT,`lotQteMin` FLOAT,`lotPrix` FLOAT,`lotDLC` DATE,`lotDateProduction` DATE,`parcelleId` INTEGER NOT NULL,`varieteId` INTEGER NOT NULL, foreign key (`parcelleId`) references Parcelle(`parcelleId`), foreign key (`varieteId`) references Variete(`varieteId`),primary key(`lotId`));
 
-CREATE TABLE `Parcelle`(`idParcelle` INTEGER,`idProducteur` INTEGER NOT NULL, foreign key (`idProducteur`) references Producteur(`idProducteur`),primary key(`idParcelle`));
+CREATE TABLE `Commande`(`cmdId` INTEGER,`cmdDate` DATETIME,`cmdQte` FLOAT,`cmdEtat` ENUM('en cours', 'valide'),`relaiId` INTEGER NOT NULL,`lotId` INTEGER NOT NULL, foreign key (`relaiId`) references Relai(`relaiId`), foreign key (`lotId`) references Lot(`lotId`),primary key(`cmdId`));
 
-CREATE TABLE `Article`(`idParcelle` INTEGER NOT NULL,`idVariete` INTEGER NOT NULL, foreign key (`idParcelle`) references Parcelle(`idParcelle`), foreign key (`idVariete`) references Variete(`idVariete`),primary key(`idParcelle`,`idVariete`));
+CREATE TABLE `Consommateur`(`cmdId` INTEGER NOT NULL,`userId` INTEGER NOT NULL, foreign key (`cmdId`) references Commande(`cmdId`), foreign key (`userId`) references Utilisateur(`userId`),primary key(`cmdId`,`userId`));
 
-CREATE TABLE `Lot`(`idLot` INTEGER,`qte` FLOAT,`qteMin` FLOAT,`prix` FLOAT,`dteLimite` DATE,`dteProduction` DATE,`idCommande` INTEGER NOT NULL,`idParcelle` INTEGER NOT NULL,`idVariete` INTEGER NOT NULL, foreign key (`idCommande`) references Commande(`idCommande`), foreign key (`idParcelle`,`idVariete`) references Article(`idParcelle`,`idVariete`),primary key(`idLot`));
+CREATE TABLE `Avis`(`avisId` INTEGER,`avisCommentaire` VARCHAR(250),`avisNote` INTEGER,`producteurId` INTEGER NOT NULL,`cmdId` INTEGER NOT NULL,`userId` INTEGER NOT NULL, foreign key (`producteurId`) references Producteur(`producteurId`), foreign key (`cmdId`,`userId`) references Consommateur(`cmdId`,`userId`),primary key(`avisId`));
 
 source newworld_data.sql
