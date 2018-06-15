@@ -11,6 +11,10 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     QGuiApplication a(argc, argv);
+    if(argc>1)
+        Passerelle::setUserId(atoi(argv[1]));
+    else
+        Passerelle::setUserId(0);
     Passerelle::setDatabase();
 
     Pdf pdf("test");

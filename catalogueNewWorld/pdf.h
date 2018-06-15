@@ -30,12 +30,6 @@ public:
      * @return Chaine de caractères contenant le code HTML
      */
     QString ecrireTexte();
-    /**
-     * @brief Génère une balise d'image à partir du nom d'un fichier d'image
-     * @param Nom de l'image dans le dossier /img
-     * @return Chaine de caratère contenant la balise de l'image au format HTML
-     */
-    string chargerImage(string image);
 
     /**
      * @brief Ecris le fichier PDf

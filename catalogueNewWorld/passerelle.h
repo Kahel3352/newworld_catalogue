@@ -12,6 +12,7 @@ using namespace std;
 class Passerelle
 {
 public:
+    static QString cheminImages;
     /**
      * @brief Initialise la base de données
      */
@@ -34,13 +35,15 @@ public:
 
     static QString chargerTemplate(string nom);
 
+    static int getUserId();
+    static void setUserId(int value);
+
 private:
     /**
      * @brief Base de données
      */
     static QSqlDatabase db;
     static int userId;
-    static Variete test2;
 };
 
 #endif // PASSERELLE_H

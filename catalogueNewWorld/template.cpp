@@ -38,7 +38,7 @@ QString HtmlTemplate::loadFile(QString nom)
     QString fileChaine;
 
     //on essai d'ouvrir le fichier
-    QFile file("../Ressources/"+nom);
+    QFile file("Ressources/"+nom);
     if(!file.open(QIODevice::ReadOnly)) {
         qDebug()<<"Impossible d'ouvrir ../Ressources/"+nom+": "+file.errorString();
     }
@@ -49,5 +49,6 @@ QString HtmlTemplate::loadFile(QString nom)
         QString line = in.readLine();
         fileChaine+=line;
     }
+    file.close();
     return fileChaine;
 }

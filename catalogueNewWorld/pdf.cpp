@@ -2,8 +2,8 @@
 
 Pdf::Pdf(QString nomDocument)
 {
-    qDebug() << "Pdf::Pdf(QString nomDocument)";
-    this->pdfWriter = new QPdfWriter(nomDocument+".pdf");
+    qDebug() << "Pdf::Pdf()";
+    this->pdfWriter = new QPdfWriter(QString::number(Passerelle::getUserId())+"test.pdf");
     this->temp = HtmlTemplate("pdf.html");
     this->temp.setStyle("style.css");
     qDebug() << "fin Pdf::Pdf(QString nomDocument)";
@@ -22,7 +22,6 @@ QString Pdf::ecrireTexte()
     this->temp.setValue("nom", QString::fromStdString(consommateur.getNom()));
     this->temp.setValue("prenom", QString::fromStdString(consommateur.getPrenom()));
     this->temp.setValue("mail", QString::fromStdString(consommateur.getMail()));
-    qDebug()<<"test: "+this->temp.getChaine();
     vector<Rayon> rayons = Passerelle::chargerRayons();
     QString chaineRayons = "";
     for(uint i = 0; i < rayons.size(); i++)
@@ -31,11 +30,6 @@ QString Pdf::ecrireTexte()
     }
     this->temp.setValue("rayons", chaineRayons);
     return this->temp.getChaine();
-}
-
-string Pdf::chargerImage(string image)
-{
-    //return "<div align=\"center\"><img src=\"img/"+image+"\" height=150 width=250></div>";
 }
 
 void Pdf::imprimer()
@@ -48,5 +42,4 @@ void Pdf::imprimer()
     qDebug()<<"Html généré: ";
     qDebug()<<codeHtml;
     textDocument.print(this->pdfWriter);
-
 }

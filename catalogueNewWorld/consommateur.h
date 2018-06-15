@@ -6,6 +6,7 @@ using namespace std;
 class Consommateur
 {
 public:
+    Consommateur();
     Consommateur(string nom, string prenom, string mail);
 
     string getNom() const;

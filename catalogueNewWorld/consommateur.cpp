@@ -2,6 +2,11 @@
 #include <iostream>
 #include <QDebug>
 
+Consommateur::Consommateur()
+{
+
+}
+
 Consommateur::Consommateur(string nom, string prenom, string mail)
 {
     qDebug() << "Consommateur::Consommateur(string nom, string prenom, string mail)";

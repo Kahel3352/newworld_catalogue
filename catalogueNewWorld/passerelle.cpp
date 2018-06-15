@@ -1,12 +1,12 @@
 #include "passerelle.h"
 
-QSqlDatabase Passerelle::db;
+QSqlDatabase Passerelle::db = QSqlDatabase::addDatabase("QMYSQL3");
 int Passerelle::userId = 0;
+QString Passerelle::cheminImages = "../ImgRessources/";
 
 void Passerelle::setDatabase()
 {
     qDebug() << "void Passerelle::setDatabase()";
-    db = QSqlDatabase::addDatabase("QMYSQL3");
     db.setHostName("localhost");
     db.setDatabaseName("nw");
     db.setUserName("root");
@@ -51,7 +51,7 @@ vector<Variete> Passerelle::chargerVariete(int idRayon)
         qDebug()<<db.lastError().text();
     else
     {
-        QString txtReq = "SELECT DISTINCT Produit.produitLibelle, Variete.varieteNom, Variete.varieteDescr, Variete.varieteImg, Utilisateur.userNom, Lot.lotQte, Lot.lotPrix FROM Produit INNER JOIN Variete ON Variete.produitId = Produit.produitId INNER JOIN Lot ON Lot.varieteId = Variete.varieteId INNER JOIN Parcelle ON Parcelle.parcelleId = Lot.parcelleId INNER JOIN Producteur ON Producteur.producteurId = Parcelle.producteurId INNER JOIN Utilisateur ON Utilisateur.userId = Producteur.userId INNER JOIN RelaiPossible ON RelaiPossible.relaiId = RelaiPossible.userId WHERE RelaiPossible.relaiId IN (SELECT RelaiPossible.relaiId FROM RelaiPossible WHERE RelaiPossible.userId = ?) AND Variete.varieteValid = 1 AND Produit.rayonId = ?;";
+        QString txtReq = "SELECT DISTINCT Produit.produitLibelle, Variete.varieteNom, Variete.varieteDescr, Variete.varieteImg, Utilisateur.userNom, Lot.lotQte, Lot.lotPrix, Unite.uniteLibelle FROM Produit INNER JOIN Variete ON Variete.produitId = Produit.produitId INNER JOIN Lot ON Lot.varieteId = Variete.varieteId INNER JOIN Parcelle ON Parcelle.parcelleId = Lot.parcelleId INNER JOIN Producteur ON Producteur.producteurId = Parcelle.producteurId INNER JOIN Utilisateur ON Utilisateur.userId = Producteur.userId INNER JOIN RelaiPossible ON RelaiPossible.relaiId = RelaiPossible.userId INNER JOIN Unite ON Unite.uniteId = Produit.uniteId WHERE RelaiPossible.relaiId IN (SELECT RelaiPossible.relaiId FROM RelaiPossible WHERE RelaiPossible.userId = ?) AND Variete.varieteValid = 1 AND Produit.rayonId = ? AND Lot.lotDLC > CURDATE();";
         QSqlQuery query;
         query.prepare(txtReq);
         query.addBindValue(userId);
@@ -63,8 +63,6 @@ vector<Variete> Passerelle::chargerVariete(int idRayon)
             {
                 vectVariete.push_back(Variete(query.value("varieteNom").toString(), query.value("varieteDescr").toString(), query.value("varieteImg").toString(), query.value("produitLibelle").toString(), query.value("lotQte").toFloat(), query.value("lotPrix").toFloat(), query.value("userNom").toString(),QString("")));
             }
-            /*Produit.produitLibelle, Variete.varieteNom, Variete.varieteDescr, Variete.varieteImg, Utilisateur.userNom, Lot.lotQte, Lot.lotPrix
-                    Variete::Variete(string nom, string description, string image, string nomProduit, int qte, float prix, string nomProducteur, string label)*/
         }
         else
             cout<<query.lastError().text().toStdString()<<endl;
@@ -94,7 +92,18 @@ Consommateur Passerelle::chargerConsommateur()
         }
         else
             qDebug()<<query.lastError().text();
-
-
     }
+
+    db.close();
+    return Consommateur();
 }
+int Passerelle::getUserId()
+{
+    return userId;
+}
+
+void Passerelle::setUserId(int value)
+{
+    userId = value;
+}
+
